@@ -1,0 +1,39 @@
+# Proton dose-depth profile in water phantom
+
+i:Ts/Seed = 1
+i:So/Demo/NumberOfHistoriesInRun = 10000
+d:So/Demo/BeamEnergy = 100.0 MeV	
+
+#===World===
+s:Ge/World/Material = "Vacuum" 		
+d:Ge/World/HLX = 40.0 cm 		
+d:Ge/World/HLY = 40.0 cm
+d:Ge/World/HLZ = 40.0 cm
+
+#===WaterPhantom===
+s:Ge/Target/Type = "TsBox" 	
+s:Ge/Target/Parent = "World"		
+s:Ge/Target/Material = "G4_WATER"	
+d:Ge/Target/HLX = 5.0 cm
+d:Ge/Target/HLY = 5.0 cm													
+d:Ge/Target/HLZ = 5.0 cm	
+
+#===Physics===
+sv:Ph/Default/Modules = 1 "g4em-standard_opt0"													
+													
+#===ProtonSource===
+s:So/Demo/Type = "Beam"
+s:So/Demo/BeamParticle = "proton"
+s:So/Demo/Component = "BeamPosition"
+u:So/Demo/BeamEnergySpread = 0.0
+s:So/Demo/BeamPositionCutoffShape = "Ellipse" 
+s:So/Demo/BeamPositionDistribution = "None"
+s:So/Demo/BeamAngularDistribution = "None"
+i:Ts/ShowHistoryCountAtInterval = 100
+
+#===DoseScorer===
+s:Sc/DoseScorer/Quantity = "DoseToMedium" 	
+s:Sc/DoseScorer/Component = "Target"												
+b:Sc/DoseScorer/OutputToConsole = "True" 											
+s:Sc/DoseScorer/IfOutputFileAlreadyExists = "Overwrite"	
+i:Sc/DoseScorer/ZBins = 1000

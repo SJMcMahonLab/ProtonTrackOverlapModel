@@ -1,0 +1,13 @@
+# Beam source for independently delivered tracks
+
+s:So/MySource1/Type = "Beam"
+s:So/MySource1/BeamParticle = "proton"
+s:So/MySource1/Component = "BeamPosition"
+u:So/MySource1/BeamEnergySpread = 0.0
+s:So/MySource1/BeamPositionCutoffShape = "Rectangle"
+s:So/MySource1/BeamPositionDistribution = "Flat"
+s:So/MySource1/BeamAngularDistribution = "None"
+d:So/MySource1/BeamPositionCutoffX = 1.0 um
+d:So/MySource1/BeamPositionCutoffY = 1.0 um
+d:So/MySource1/BeamEnergy = 100.0 MeV
+i:So/MySource1/NumberOfHistoriesInRun = 45

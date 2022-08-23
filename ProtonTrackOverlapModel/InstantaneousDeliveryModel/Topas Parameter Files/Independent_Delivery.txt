@@ -1,0 +1,57 @@
+# Proton irradiation using an independent delivery of tracks
+
+#===Variables===
+i:Ts/NumberOfThreads = 1
+i:Ts/ShowHistoryCountAtInterval = 5
+i:Ts/Seed = 1
+s:Sc/GvalueEnergy/OutputFile = "GValueEnergy_Independent_Filename"
+
+#===Physics and chemistry===
+sv:Ph/Default/Modules = 2 "TsEmDNAPhysics" "TsEmDNAChemistry"
+# path to TOPAS chemistry file
+includeFile = TOPASChemistry.txt
+s:Ch/ChemistryName = "TOPASChemistry" 
+b:Ch/TOPASChemistry/ChemicalStageTransportActive     = "True"
+d:Ch/TOPASChemistry/ChemicalStageTimeEnd             = 1.1 us 
+dv:Ch/TOPASChemistry/ChemicalStageTimeStep           = 3 10.0 100000.0 1000000.0 ps 
+dv:Ch/TOPASChemistry/ChemicalStageTimeStepResolution = 3 0.1 1.0 10.0 ps 
+
+#===Beam Delivery===
+includeFile = Source_Independent.txt
+
+#===World===
+s:Ge/World/Material = "Vacuum" 		
+d:Ge/World/HLX = 10.0 um 		
+d:Ge/World/HLY = 10.0 um
+d:Ge/World/HLZ = 10.0 um
+
+#===WaterPhantom===
+s:Ge/target/Type = "TsBox" 	
+s:Ge/target/Parent = "World"		
+s:Ge/target/Material = "G4_WATER"
+d:Ge/target/HLX = 1.0 um
+d:Ge/target/HLY = 1.0 um
+d:Ge/target/HLZ = 1.0 um
+																															
+#===Scoring===
+# using modified energy-weighted G-Value scorer
+s:Sc/GvalueEnergy/Quantity = "GvalueEnergy"
+s:Sc/GvalueEnergy/Component = "target"
+s:Sc/GvalueEnergy/IfOutputFileAlreadyExists = "Increment"
+s:Sc/GvalueEnergy/OutputType = "ascii"
+b:Sc/GvalueEnergy/OutputToConsole = "True"
+i:Sc/GvalueEnergy/TimeBins    = 100
+d:Sc/GvalueEnergy/TimeBinMin  = 1.0 ps
+d:Sc/GvalueEnergy/TimeBinMax  = 1 us
+b:Sc/GvalueEnergy/TimeBinLog  = "True"
+
+#===DoseScorer===
+s:Sc/DoseScorer/Quantity = "DoseToMedium" 	
+s:Sc/DoseScorer/Component = "target"												
+b:Sc/DoseScorer/OutputToConsole = "True" 											
+s:Sc/DoseScorer/IfOutputFileAlreadyExists = "Increment"	
+b:Sc/DoseScorer/OutputAfterRun = "True"
+
+
+
+

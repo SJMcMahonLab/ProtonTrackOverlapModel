@@ -1,0 +1,62 @@
+# Tracks chemical species around a proton track
+
+#===Variables===
+i:Ts/Seed = 1
+i:Ts/NumberOfThreads = 4
+
+d:So/MySource/BeamEnergy = 100.0 MeV
+i:So/MySource/NumberOfHistoriesInRun = 50
+i:Ts/ShowHistoryCountAtInterval = 5
+
+d:Sc/pTuple/TimeCut = 1.0 ps
+s:Sc/pTuple/OutputFile = "pTuple_Filename" 
+
+#===Physics and Chemistry===
+b:Sc/pTuple/IncludeChemicalTrack = "True"
+sv:Ph/Default/Modules = 2 "TsEmDNAPhysics" "TsEmDNAChemistry"
+# path to chemistry file
+includeFile = TOPASChemistry.txt
+s:Ch/ChemistryName = "TOPASChemistry" 
+b:Ch/TOPASChemistry/ChemicalStageTransportActive     = "True"
+d:Ch/TOPASChemistry/ChemicalStageTimeEnd             = 1.1 us
+dv:Ch/TOPASChemistry/ChemicalStageTimeStep           = 3 10.0 100000.0 1000000.0 ps 
+dv:Ch/TOPASChemistry/ChemicalStageTimeStepResolution = 3 0.1 1.0 10.0 ps 
+
+#===World===
+s:Ge/World/Material = "Vacuum" 		
+d:Ge/World/HLX = 1.0 mm 		
+d:Ge/World/HLY = 1.0 mm
+d:Ge/World/HLZ = 5.0 um
+
+#===WaterPhantom===
+s:Ge/target/Type = "TsCylinder" 	
+s:Ge/target/Parent = "World"		
+s:Ge/target/Material = "G4_WATER"	
+d:Ge/target/HL = 2.0 um
+d:Ge/target/RMaX = 40.0 um																										
+													
+#===ProtonSource===
+s:So/MySource/Type = "Beam"
+s:So/MySource/BeamParticle = "proton"
+s:So/MySource/Component = "BeamPosition"
+u:So/MySource/BeamEnergySpread = 0.0
+s:So/MySource/BeamPositionCutoffShape = "Ellipse" 
+s:So/MySource/BeamPositionDistribution = "None"
+s:So/MySource/BeamAngularDistribution = "None"
+
+#===TupleScorer===
+s:Sc/pTuple/Quantity = "Tuple"
+s:Sc/pTuple/Component = "target"
+s:Sc/pTuple/OutputType = "ASCII"
+b:Sc/pTuple/OutputToConsole = "True"
+s:Sc/pTuple/IfOutputFileAlreadyExists = "Increment"
+b:Sc/pTuple/OutputAfterRun = "True"
+b:Sc/pTuple/IncludeEventID = "True"
+
+# exclude physical track from scoring
+b:Sc/pTuple/IncludePhysicalTrack = "False"
+b:Sc/pTuple/IncludeEnergyDeposited = "False"
+
+# other optional data
+b:Sc/pTuple/IncludeVertexPosition = "False"
+b:Sc/pTuple/IncludeParticleName = "False"
